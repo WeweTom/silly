@@ -50,5 +50,11 @@ silly run
   
 ## 示例
   查看examapls目录
-  
+
+## 目录模板支持
+
+  ```javascript
+  silly add kissypie
+  ```
+  将创建一个kissypie的目录结构
 
