@@ -1,0 +1,15 @@
+{
+  "pkgroot":"../",
+  "config" : {
+    "var" : {
+      "timestamp" : "20120312"
+    },
+    "combo" : {
+      "a" : {
+        "src" : ["a.js","b.js"],
+        "dest" : "ab.js",
+				"min_file" : true
+      }
+    }
+  }
+}

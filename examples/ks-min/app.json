@@ -1,0 +1,14 @@
+{
+  "pkgroot":"../",
+	"config":{
+			"var" : {
+				"timestamp" : "20120312"
+			},
+			"ksmin" : {
+				"a" : {
+					"src" : ["index.js"],
+					"dest" : "../ks-min-{{timestamp}}/index-min.js"
+				}
+			}
+	}
+}

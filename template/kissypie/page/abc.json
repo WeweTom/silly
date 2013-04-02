@@ -1,0 +1,17 @@
+{
+  "pkgroot":"./",
+  "config" : {
+    "ksmin" : {
+      "a" : {
+        "src" : ["init.js"],
+        "dest" : "../../201303026/page/init-min.js",
+				// 即init-min.js的未压缩版本
+				"dest_uncompress" : "../../201303026/page/init.js",
+				// kissy包配置
+				"path":"http://a.tbcdn.cn",
+				"tag":"20130326",
+				"charset":"utf-8"
+      }
+    }
+  }
+}

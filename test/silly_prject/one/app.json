@@ -1,0 +1,20 @@
+{
+  "pkgroot":"../",
+  "config" : {//全局变量
+    "var" : {
+      "timestamp" : "20120312"
+    },
+    "ksmin" : {
+      "a" : {
+        "src" : ["index.js"],
+        "dest" : "index-min.js"
+      }
+    },
+    "combo" : {
+      "a" : {
+        "src" : ["a.js","b.js"],
+        "dest" : "ab.js"
+      }
+    }
+  }
+}

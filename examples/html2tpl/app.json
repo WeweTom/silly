@@ -1,0 +1,12 @@
+{
+  "config" : {
+    "html2tpl" : {
+      "a" : {
+        "src" : ["pop.html"],
+        "dest" : "{{basename}}.js"
+      }
+    }
+  }
+}
+
+

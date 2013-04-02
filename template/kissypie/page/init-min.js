@@ -1,0 +1,1 @@
+KISSY.add("1.0/page/mods/b",function(){function n(){}return n}),KISSY.add("1.0/page/mods/a",function(){function n(){}return n}),KISSY.add("1.0/page/init",function(){},{requires:["./mods/a","./mods/b"]});

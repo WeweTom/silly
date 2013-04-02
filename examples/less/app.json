@@ -1,0 +1,10 @@
+{
+  "config" : {
+    "less" : {
+      "a" : {
+        "src" : "*in.less",
+        "dest" : "{{basename}}.css"
+      }
+    }
+  }
+}

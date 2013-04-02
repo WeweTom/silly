@@ -1,0 +1,10 @@
+{
+  "config" : {
+    "less" : {
+      "a" : {
+        "src" : "./test.less",
+        "dest" : "../less_20130330/test.css"
+      }
+    }
+  }
+}
