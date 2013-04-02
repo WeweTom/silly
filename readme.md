@@ -1,4 +1,4 @@
-# Silly is builder Kissy
+# Silly is a builder for Kissy
 
 
 ## 此版本为abc的一个不完全的实现 ##
