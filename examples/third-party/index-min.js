@@ -1,0 +1,1 @@
+KISSY.add("third-party/mods/modc",function(){}),KISSY.add("third-party/mods/modb",function(){}),KISSY.add("third-party/mods/moda",function(){},{requires:["third-party/mods/modb","third-party/mods/modc"]}),KISSY.add("third-party/index",function(){},{requires:["third-party/mods/moda","third-party/mods/modb"]});

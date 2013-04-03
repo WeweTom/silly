@@ -11,14 +11,14 @@ var uglify = require("uglify-js")
   , Path = require('path')
   , mkdirp = require('mkdirp')
 
-function promiseGetdeps(abspath){
-  var defer = Q.defer()
-    , promise = defer.promise
-  getdeps(abspath,function(filepaths){
-    defer.resolve(filepaths)
-  })
-  return promise
-}
+// function promiseGetdeps(abspath){
+//   var defer = Q.defer()
+//     , promise = defer.promise
+//   getdeps(abspath,function(filepaths){
+//     defer.resolve(filepaths)
+//   })
+//   return promise
+// }
 
 // match file --> parse file deps --> combo file --> min file
 module.exports = function(cfg,SILLY){
@@ -40,7 +40,7 @@ module.exports = function(cfg,SILLY){
   stream = matchfiles(SILLY.root,cfg.src,cfg.exclude)
   stream.on('file',function(abs,filename,extname,$){
     kissmetasks.push(
-      promiseGetdeps(abs)
+      commontask.getdeps(abs)
       .then(function(filepathslist){
         return Q.all(filepathslist.map(function(abs){
                        return commontask.read(abs)

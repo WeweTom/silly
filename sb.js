@@ -16,9 +16,12 @@ var fs = require('fs')
   , mkdirp = require('mkdirp')
   , BASE_DIR = Path.dirname(__filename)
   , pargv = process.argv
+  , matchfiles = require('matchfiles')
   , TemplateManager = require('./lib/template-manager')
+  , uglify = require("uglify-js")
+  , deptool = require('./lib/parse-deps-tool')
 
-module.exports = function(){
+function exp(){
   var cwd = process.cwd()
     , cfgfile = argv.c || argv.config || 'app.json'
     , cmd = pargv[2]
@@ -31,7 +34,7 @@ module.exports = function(){
     run(cwd,cfgfile);break;
   }
 }
-
+module.exports = exp;
 // 添加目录模板
 function init(){
   argv = optimist.alias('t','type')
@@ -132,17 +135,17 @@ function run(cwd,cfgfile){
         taskpath = Tasks[e.taskname]
         taskconfig = e.taskconfig
         taskname = e.taskname
-        try{
-          task = taskpath && require(taskpath)
-        }catch(e){
-          console.log(e)
-          return
-        }
-
+        // try{
+        //   task = taskpath && require(taskpath)
+        // }catch(e){
+        //   console.log(e)
+        //   return
+        // }
         if(!task){
           try{
             task = require(e.taskname)
           }catch(e){
+            console.log(e)
             errorstack.push('未发现第三方插件:'+taskname)
             errorstack.push('请尝试:')
             errorstack.push('npm instasll '+taskname)
@@ -150,7 +153,7 @@ function run(cwd,cfgfile){
           }
         }
         if(task){
-          taskqueue.push(TaskGenerator(task,taskconfig))
+          taskqueue.push(TaskGenerator(task,taskconfig,exp))
         }else{
           console.error('未定义的task:'+e.taskname)
         }
@@ -210,3 +213,16 @@ function run(cwd,cfgfile){
     }
   })
 }
+
+// 导出可能用到的库以及工具集
+exp.Q = Q
+exp.tool = tool
+exp.matchfiles = matchfiles
+exp._ = _
+exp.optimist = optimist
+exp.Mustache = Mustache
+exp.pipe = pipe
+exp.asynctasks = TaskCommon
+exp.mkdirp = mkdirp
+exp.uglify = uglify
+exp.deptool = deptool

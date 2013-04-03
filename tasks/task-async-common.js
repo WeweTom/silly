@@ -2,6 +2,7 @@ var Q = require('q')
   , fs = require('fs')
   , read = Q.nfbind(fs.readFile)
   , write = Q.nfbind(fs.writeFile)
+  , getdeps = require('../lib/parse-deps')
   , mkdirp = require('mkdirp')
   , child_process = require('child_process')
   , exec = child_process.exec
@@ -66,6 +67,14 @@ exports.check = function(cmd){
     }else{
       defer.resolve()
     }
+  })
+  return promise
+}
+exports.getdeps = function (abspath){
+  var defer = Q.defer()
+    , promise = defer.promise
+  getdeps(abspath,function(filepaths){
+    defer.resolve(filepaths)
   })
   return promise
 }
