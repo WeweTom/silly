@@ -1,12 +1,12 @@
 {
   "author": "cookieu@gmail.com",
-  "name": "silly",
-  "version": "0.0.0",
+  "name": "silly-builder",
+  "version": "0.0.1",
   "bin":{"silly":"./bin/cli"},
   "main":"sb.js",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/WeweTom/silly.git"
   },
   "engines": {
     "node": "~0.8.0"

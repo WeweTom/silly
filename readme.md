@@ -3,6 +3,16 @@
 
 ## 此版本为abc的一个不完全的实现 ##
 
+### usage
+```sh
+$ npm install silly-builder -g
+$ npm init kissypie #生成kissypie目录
+$ cd kissypie
+$ silly run 
+```
+
+### features
+
 - 简单的配置
 
   没有package.json
