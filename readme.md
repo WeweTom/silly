@@ -10,14 +10,15 @@
   没有gruntfile
 
 - 任务系统只包含常用的任务系统 
-  `combo` js文件合并
-  `min` js文件压缩文件
-  `ksmin` 针对kissy的一个集成任务，包括js的模块分析、合并、压缩于一体
-  `css-combo` css合并
-  `less` less编译，配合watch任务使用
-  `coffee` coffee script 脚本编译，配合watch任务使用
-  `watch` 监听文件变化，然后执行相关任务
-  `html2tpl` 将html转化为模板
+  - `combo` js文件合并
+  - `min` js文件压缩文件
+  - `ksmin` 针对kissy的一个集成任务，包括js的模块分析、合并、压缩于一体
+  - `css-combo` css合并
+  - `less` less编译，配合watch任务使用
+  - `coffee` coffee script 脚本编译，配合watch任务使用
+  - `watch` 监听文件变化，然后执行相关任务
+  - `html2tpl` 将html转化为模板
+  - `csscombo` TODO
 
 - 模板机制
   包含了kissypie模板
