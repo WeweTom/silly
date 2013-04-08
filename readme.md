@@ -42,6 +42,7 @@ $ silly run index.js  # 会自动搜索index.js的依赖，并将其合并压缩为一个index-min.
 ```
 
 - 复杂的组合任务
+
   通过创建app.json文件，来配置执行复杂的组合任务
 
 ```javascript
@@ -233,7 +234,9 @@ sass也是一种方便的css预处理器，但是因其依赖ruby，需要执行npm之外的安装操作
 $ #bla bla 安装
 ```
 ### html转换为 kissy 模板
-js竟然不支持多行字符串，所以，你不能像在python中这样写一段HTML字符串
+
+js不支持多行字符串，所以，你不能像在python中这样写一段HTML字符串
+
 ```python
 '''
 <div class="hd">
