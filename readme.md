@@ -26,47 +26,67 @@ $ npm install silly-builder -g
   - `html2tpl` 将html转化为模板
   - `csscombo` TODO
 
-- 模板机制
-  包含了kissypie模板
-
-```shell
-$ npm init kissypie #生成kissypie目录
-$ cd kissypie
-$ #create app.json 配置等
-$ silly run -c app.json
-```
+- 目录模板
+  快速生成常见的目录模板
 
 
 ## getting started
+- 零配置运行
+  
+  如果你按照标准的kissy匿名模块来组织代码，那么可以在不进行任何配置的情况下进行
+  kissy的模块依赖分析、合并、压缩具体请看examples/ks-min
 
-- 创建app.json文件
+```shell
+$ cd examples/ks-min
+$ silly run index.js  # 会自动搜索index.js的依赖，并将其合并压缩为一个index-min.js文件
+```
+
+- 复杂的组合任务
+  通过创建app.json文件，来配置执行复杂的组合任务
 
 ```javascript
 {
   "config" : {
     "combo" : {
-      "第一个任务" : {
+      "第一个js combo任务" : {
         "src" : ["a.js","b.js"],
         "dest" : "ab.js",
+		"min_file" : true
+      },
+      "第二个js combo任务" : {
+        "src" : ["c.js","d.js"],
+        "dest" : "cd.js"
+      }
+    },
+    "css-combo" : {
+      "第一个css combo任务" : {
+        "src" : ["a.css","b.css"],
+        "dest" : "ab.css",
 		"min_file" : true
       }
     }
   }
 }
 ```
+
   表示的意思是将当前目录下的a.js b.js合并成一个叫ab.js的文件
+
 - 执行这个任务
+
 ```shell
 silly run -c app.json
 ```
   silly默认会寻找当前目录下的app.json，所以上面的命令可以简化为
+
 ```shell
 silly run
 ```
+
 ## 更多示例
 
 ### css 合并
    css 合并和 js 合并类似
+
 ```css
 {
   "config" : {
@@ -84,10 +104,13 @@ silly run
 
 ### less 编译
 要执行less编译功能，必须先安装lessc
+
 ```shell
 $ npm install less -g
 ```
+
 全局安装了less后，你可以针对某个文件your_page.less，执行less编译命令
+
 ```shell
 $ lessc your_page.less your_page.css
 ```
@@ -171,9 +194,11 @@ $ npm install coffee-script -g
   }
 }
 ```
-注意，只有src属性，因为coffee编译器没有提供输出文件名的选择，main.coffee会编译成main.js而不能是其他文件
+
+注意，任务配置中只有src属性，因为coffee编译器没有提供输出文件名的选择，main.coffee会编译成main.js而不能是其他文件
 
 与less 类似 ，coffee也可以与watch命令配合使用
+
 ```javascript
 {
   "config" : {
@@ -273,13 +298,12 @@ silly 搜集了一写常见的目录结构，方便快速构建项目
 #### kissypie
   kissypie是一套kissypie推荐的目录结构
 
-  ```javascript
-  silly add kissypie
-  ```
-  将创建一个kissypie的目录结构
-
+```shell
+$ npm init kissypie		# 将创建一个kissypie的目录结构
+$ cd kissypie			# app.json 配置完后执行下面命令
+$ silly run
+```
 #### SinglPage
-
 
 #### SinglUpPage
 
