@@ -1,7 +1,8 @@
-## What is "Silly" | "犀利"是什么？
+## What is "Silly" 
 
 "Silly" is a builder for frontend engineer
 
+## "犀利"是什么？
 "犀利"是一个为前端量身定制的打包工具
 
 ## install
