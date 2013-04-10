@@ -228,11 +228,33 @@ $ npm install coffee-script -g
 }
 ```
 
-### sass/scss 任务 TODO
-sass也是一种方便的css预处理器，但是因其依赖ruby，需要执行npm之外的安装操作
+### compass 任务
+sass也是一种方便的css预处理器，但是因其依赖ruby，需要先安装compass。执行下面的命令确定你已经安装了compass
+
 ```shell
-$ #bla bla 安装
+$ compass -v
 ```
+
+配合watch任务执行compass命令。具体请查看examples/watch-compass
+
+```javascript
+{
+  "config" : {
+    "watch" : {
+      "a watch task" : {
+        "src" : ["sass/*.scss"],
+        "tasks" : ["compass"]
+      }
+    },
+    "compass" : {
+      "compass task" : {
+        "src" : "." //当前目录，即config.rb所在的目录
+      }
+    }
+  }
+}
+```
+
 ### html转换为 kissy 模板
 
 js不支持多行字符串，所以，你不能像在python中这样写一段HTML字符串
