@@ -1,0 +1,56 @@
+/*
+Syntax error: File to import not found or unreadable: compass/reset.
+              Load paths:
+                /home/tom/Dropbox/sass/my/sass
+                /home/tom/Dropbox/sass/my/sass
+        on line 7 of /home/tom/Dropbox/sass/my/sass/screen.scss
+
+2:  * In this file you should write your main styles. (or centralize your imports)
+3:  * Import this file using the following HTML or equivalent:
+4:  * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+5: 
+6: 
+7: @import "compass/reset";
+
+Backtrace:
+/home/tom/Dropbox/sass/my/sass/screen.scss:7
+/var/lib/gems/1.8/gems/sass-3.2.7/bin/../lib/sass/../sass/tree/import_node.rb:67:in `import'
+/var/lib/gems/1.8/gems/sass-3.2.7/bin/../lib/sass/../sass/tree/import_node.rb:28:in `imported_file'
+/var/lib/gems/1.8/gems/sass-3.2.7/bin/../lib/sass/../sass/tree/import_node.rb:37:in `css_import?'
+/var/lib/gems/1.8/gems/sass-3.2.7/bin/../lib/sass/../sass/tree/visitors/perform.rb:217:in `visit_import'
+/var/lib/gems/1.8/gems/sass-3.2.7/bin/../lib/sass/../sass/tree/visitors/base.rb:37:in `send'
+/var/lib/gems/1.8/gems/sass-3.2.7/bin/../lib/sass/../sass/tree/visitors/base.rb:37:in `visit'
+/var/lib/gems/1.8/gems/sass-3.2.7/bin/../lib/sass/../sass/tree/visitors/perform.rb:100:in `visit'
+/var/lib/gems/1.8/gems/sass-3.2.7/bin/../lib/sass/../sass/tree/visitors/base.rb:53:in `visit_children'
+/var/lib/gems/1.8/gems/sass-3.2.7/bin/../lib/sass/../sass/tree/visitors/base.rb:53:in `map'
+/var/lib/gems/1.8/gems/sass-3.2.7/bin/../lib/sass/../sass/tree/visitors/base.rb:53:in `visit_children'
+/var/lib/gems/1.8/gems/sass-3.2.7/bin/../lib/sass/../sass/tree/visitors/perform.rb:109:in `visit_children'
+/var/lib/gems/1.8/gems/sass-3.2.7/bin/../lib/sass/../sass/tree/visitors/perform.rb:121:in `with_environment'
+/var/lib/gems/1.8/gems/sass-3.2.7/bin/../lib/sass/../sass/tree/visitors/perform.rb:108:in `visit_children'
+/var/lib/gems/1.8/gems/sass-3.2.7/bin/../lib/sass/../sass/tree/visitors/base.rb:37:in `visit'
+/var/lib/gems/1.8/gems/sass-3.2.7/bin/../lib/sass/../sass/tree/visitors/perform.rb:128:in `visit_root'
+/var/lib/gems/1.8/gems/sass-3.2.7/bin/../lib/sass/../sass/tree/visitors/base.rb:37:in `send'
+/var/lib/gems/1.8/gems/sass-3.2.7/bin/../lib/sass/../sass/tree/visitors/base.rb:37:in `visit'
+/var/lib/gems/1.8/gems/sass-3.2.7/bin/../lib/sass/../sass/tree/visitors/perform.rb:100:in `visit'
+/var/lib/gems/1.8/gems/sass-3.2.7/bin/../lib/sass/../sass/tree/visitors/perform.rb:7:in `send'
+/var/lib/gems/1.8/gems/sass-3.2.7/bin/../lib/sass/../sass/tree/visitors/perform.rb:7:in `visit'
+/var/lib/gems/1.8/gems/sass-3.2.7/bin/../lib/sass/../sass/tree/root_node.rb:20:in `render'
+/var/lib/gems/1.8/gems/sass-3.2.7/bin/../lib/sass/../sass/engine.rb:315:in `_render'
+/var/lib/gems/1.8/gems/sass-3.2.7/bin/../lib/sass/../sass/engine.rb:262:in `render'
+/var/lib/gems/1.8/gems/sass-3.2.7/bin/../lib/sass/../sass/plugin/compiler.rb:341:in `update_stylesheet'
+/var/lib/gems/1.8/gems/sass-3.2.7/bin/../lib/sass/../sass/plugin/compiler.rb:203:in `update_stylesheets'
+/var/lib/gems/1.8/gems/sass-3.2.7/bin/../lib/sass/../sass/plugin/compiler.rb:201:in `each'
+/var/lib/gems/1.8/gems/sass-3.2.7/bin/../lib/sass/../sass/plugin/compiler.rb:201:in `update_stylesheets'
+/var/lib/gems/1.8/gems/sass-3.2.7/bin/../lib/sass/../sass/plugin.rb:81:in `update_stylesheets'
+/var/lib/gems/1.8/gems/sass-3.2.7/bin/../lib/sass/../sass/exec.rb:425:in `watch_or_update'
+/var/lib/gems/1.8/gems/sass-3.2.7/bin/../lib/sass/../sass/exec.rb:307:in `process_result'
+/var/lib/gems/1.8/gems/sass-3.2.7/bin/../lib/sass/../sass/exec.rb:41:in `parse'
+/var/lib/gems/1.8/gems/sass-3.2.7/bin/../lib/sass/../sass/exec.rb:21:in `parse!'
+/var/lib/gems/1.8/gems/sass-3.2.7/bin/sass:9
+/usr/local/bin/sass:19:in `load'
+/usr/local/bin/sass:19
+*/
+body:before {
+  white-space: pre;
+  font-family: monospace;
+  content: "Syntax error: File to import not found or unreadable: compass/reset.\A               Load paths:\A                 /home/tom/Dropbox/sass/my/sass\A                 /home/tom/Dropbox/sass/my/sass\A         on line 7 of /home/tom/Dropbox/sass/my/sass/screen.scss\A \A 2:  * In this file you should write your main styles. (or centralize your imports)\A 3:  * Import this file using the following HTML or equivalent:\A 4:  * <link href=\"/stylesheets/screen.css\" media=\"screen, projection\" rel=\"stylesheet\" type=\"text/css\" /> */\A 5: \A 6: \A 7: @import \"compass/reset\";"; }

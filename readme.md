@@ -1,13 +1,14 @@
-# Silly is a builder for Kissy
+## What is "Silly" | "犀利"是什么？
 
+"Silly" is a builder for frontend engineer
 
-## 此版本为abc的一个不完全的实现 ##
+"犀利"是一个为前端量身定制的打包工具
 
-### install
+## install
 ```sh
 $ npm install silly-builder -g
 ```
-### features
+## features
 
 - 简单的配置
 
@@ -28,7 +29,6 @@ $ npm install silly-builder -g
 
 - 目录模板
   快速生成常见的目录模板
-
 
 ## getting started
 - 零配置运行

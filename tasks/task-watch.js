@@ -18,10 +18,27 @@ module.exports = function(cfg,SILLY){
     fs.watch(abs
             ,tool.throttle(function(){
                console.log('watch task>>>',filename,'changed')
-               tasks &&
+               var errorstack = []
+                tasks &&
                  tasks.forEach(function(taskname){
                    var taskconfig = config[taskname]
                      , task = SILLY.Tasks[taskname]
+                   task = task && require(task)
+                   if(!task){
+                     try{
+                       task = require(taskname)
+                     }catch(e){
+                       console.log(e)
+                       errorstack.push('未发现第三方插件:'+taskname)
+                       errorstack.push('请尝试:')
+                       errorstack.push('npm instasll '+taskname)
+                     }
+                   }
+
+                   if(!task){
+                     return
+                   }
+
                    _.chain(taskconfig)
                    .pairs(taskconfig)
                    .map(function(value,key){

@@ -127,20 +127,10 @@ function run(cwd,cfgfile){
           return
         }
 
-
         var taskpath = Tasks[e.taskname]
           , task = taskpath && require(taskpath)
           , taskconfig = e.taskconfig
           , taskname = e.taskname
-        taskpath = Tasks[e.taskname]
-        taskconfig = e.taskconfig
-        taskname = e.taskname
-        // try{
-        //   task = taskpath && require(taskpath)
-        // }catch(e){
-        //   console.log(e)
-        //   return
-        // }
         if(!task){
           try{
             task = require(e.taskname)
