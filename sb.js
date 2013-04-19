@@ -28,8 +28,6 @@ function exp(){
   switch(cmd){
     case "init":
     init();break;
-    // case "run":
-    // run(cwd,cfgfile);break;
     default:
     run(cwd,cfgfile);break;
   }
@@ -171,8 +169,12 @@ function run(cwd,cfgfile){
       })
       configparser.parse(jsonconfig)
     }else{
-      // if(pargv[2] !== run){}
-      var files = pargv.slice(3)
+      var files;
+      if(pargv[2] == 'run'){
+        files = pargv.slice(3);
+      }else{
+        files = pargv.slice(2);
+      }
       if(files.length){
         files.forEach(function(file){
           var dest
@@ -196,9 +198,9 @@ function run(cwd,cfgfile){
             task = require(Tasks.less);
           }else{
             console.log('>>>')
-            console.log('  只能执行silly run script_name.js')
-            console.log('  或者：');
-            console.log('  只能执行silly run less_file.less')
+            console.log('       只能执行silly run script_name.js')
+            console.log('          或者：');
+            console.log('       只能执行silly run less_file.less')
             return;
           }
           taskqueue.push(TaskGenerator(task,taskconfig))
@@ -214,9 +216,9 @@ function run(cwd,cfgfile){
       }else{
         console.warn('>>> does not find find any file')
         console.log('>>> usage:')
-        console.log('  只能执行silly run script_name.js')
-        console.log('  或者：');
-        console.log('  只能执行silly run less_file.less')
+        console.log('          只能执行silly run script_name.js')
+        console.log('            或者：');
+        console.log('          只能执行silly run less_file.less')
       }
     }
   })
