@@ -114,9 +114,16 @@ $ npm install less -g
 全局安装了less后，你可以针对某个文件your_page.less，执行less编译命令
 
 ```shell
-$ lessc your_page.less your_page.css
+$ lessc your_page.less your_page.css # 将your_page.less编译为your_page.css
 ```
-这样当然没问题，但是，往往在部署的时候，这个只是部署过程中的多个步骤之一——我们将一个步骤看作一个任务，将多个步骤看作多个任务，将这些任务用json来描述，放在一起执行。这样，执行多个步骤就方便多了，所以就有了gruntjs 和 silly 这个工具了。
+
+使用silly封装了less编译操作，这样使用
+
+```shell
+$ silly run your_page.less # 将your_page.less编译为your_page.css
+```
+
+对less文件一个一个的执行编译，这样当然没问题，但是，往往在部署的时候，这个只是部署过程中的多个步骤之一——我们将一个步骤看作一个任务，将多个步骤看作多个任务，将这些任务用json来描述，放在一起执行。这样，执行多个步骤就方便多了，所以就有了gruntjs 和 silly 这个工具了。
 
 silly 和 GruntJs还是有很大的不同的，简单来讲，silly正如它名字所表达的那样，要简单多了
 
