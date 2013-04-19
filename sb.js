@@ -175,18 +175,35 @@ function run(cwd,cfgfile){
       var files = pargv.slice(3)
       if(files.length){
         files.forEach(function(file){
-          var dest = tool.transformfilename(file,'-min.js')
-          var taskconfig = {
-            dest:dest,
-            src:[file],
-            combo_file:true
+          var dest
+            , taskconfig
+            , task
+            , extname = Path.extname(file);
+          if(extname == '.js'){
+            dest = tool.transformfilename(file,'.js','-min.js')
+            taskconfig = {
+              dest:dest,
+              src:[file],
+              combo_file:true
+            }
+            task = require(Tasks.ksmin)
+          }else if(extname == '.less'){
+            dest = tool.transformfilename(file,'.less','-min.css')
+            taskconfig = {
+              src : [file],
+              dest : dest
+            }
+            task = require(Tasks.less);
+          }else{
+            console.log('>>>')
+            console.log('  只能执行silly run script_name.js')
+            console.log('  或者：');
+            console.log('  只能执行silly run less_file.less')
+            return;
           }
-            , task = require(Tasks.ksmin)
           taskqueue.push(TaskGenerator(task,taskconfig))
         })
-
-        console.log('>>>execute default task ksmin...')
-
+        console.log('>>>executing default task ...')
         pipe(SILLY,taskqueue)
         .then(function(){
           console.log('>>>done')
@@ -194,11 +211,12 @@ function run(cwd,cfgfile){
         .fail(function(err){
           console.log('>>>fail:',err)
         })
-
       }else{
-        console.warn('>>>does not find find any file')
-        console.log('>>>usage:')
-        console.log('silly run filename.js')
+        console.warn('>>> does not find find any file')
+        console.log('>>> usage:')
+        console.log('  只能执行silly run script_name.js')
+        console.log('  或者：');
+        console.log('  只能执行silly run less_file.less')
       }
     }
   })

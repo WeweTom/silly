@@ -44,8 +44,6 @@ module.exports = function(cfg,SILLY){
           , filename
           , $ = $$[key]
 
-        console.log($)
-
         filename = sillyTool.makemoney(cfg.dest,$)
         filename = Mustache.render(cfg.dest,data)
         to = Path.resolve(SILLY.root,filename)
