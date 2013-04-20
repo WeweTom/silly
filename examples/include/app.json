@@ -1,9 +1,7 @@
 {
-  "config" : {
-    "include" : {
-      "任务一" : {
-        "src" : "./less/app.json"
-      }
-    }
-  }
+  tasks:{
+	  "include":{
+        "src" : "../less/app.json"
+     }
+	}
 }

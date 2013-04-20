@@ -1,10 +1,5 @@
 {
-  "config" : {
-    "less" : {
-      "a" : {
-        "src" : "*in.less",
-        "dest" : "{{basename}}.css"
-      }
-    }
-  }
+  "tasks" : {
+	  "less":{"src" : "*in.less","dest" : "{{basename}}.css"}
+	}
 }

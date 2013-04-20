@@ -1,13 +1,11 @@
 {
-  "config" : {
-    "css-combo" : {
-      "a" : {
-        "src" : ["a.css","b.css"],
-        "min_code" : true,
-        "dest" : "ab.css"
-      }
-    }
-  }
+  tasks:{
+	  "css-combo":{
+      "src" : ["a.css","b.css"],
+      "min_code" : true,
+      "dest" : "ab.css"
+		}
+	}
 }
 
 

@@ -1,10 +1,8 @@
 {
-  "config" : {
+  "tasks" : {
     "kissy-compile" : {//测试使用第三方插件
-      "任务一" : {
-			  src:["index.js"],
-				dest:"index-min.js"
-      }
+			src:["index.js"],
+			dest:"index-min.js"
     }
   }
 }

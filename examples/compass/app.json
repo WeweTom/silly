@@ -1,9 +1,5 @@
 {
-  "config" : {
-    "compass" : {
-      "compass task" : {
-        "src" : "." //当前目录，即config.rb所在的目录
-      }
-    }
-  }
+  "tasks":{
+	  "compass":{"src" : "."} //当前目录，即config.rb所在的目录
+	}
 }

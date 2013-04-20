@@ -1,0 +1,28 @@
+{
+  "pkgroot":"../",
+  "config" : {
+    "var" : {
+      "timestamp" : "20120312"
+    },
+    "ksmin" : {
+      "a" : {
+        "src" : ["index.js"],
+        "dest" : "../20130229/index-min.js",
+				"combo_file" : true,
+				// kissy包配置
+
+				// 线上包路径
+				"path":"http://a.tbcdn.cn/apps",
+
+				// dailly包路径：应用url中包含daily.taobao.net自动切换，到这个包
+				"daily_path":"http://assets.daily.taobao.net/apps/",
+
+				// url中加上?local-debug，自动切换到这个包
+				"local_path":"http://127.0.0.1/apps/",
+
+				"tag":"2013.03.26",
+				"charset":"utf-8"
+      }
+    }
+  }
+}

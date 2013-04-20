@@ -1,15 +1,11 @@
 {
-  "config" : {
+  "tasks" : {
     "watch" : {
-      "a watch task" : {
-        "src" : ["sass/*.scss"],
-        "tasks" : ["compass"]
-      }
+      "src" : ["sass/*.scss"],
+      "tasks" : ["compass"]
     },
     "compass" : {
-      "compass task" : {
-        "src" : "." //当前目录，即config.rb所在的目录
-      }
+      "src" : "." //当前目录，即config.rb所在的目录
     }
   }
 }

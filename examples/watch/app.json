@@ -1,0 +1,6 @@
+{
+  tasks:{
+	  "watch":{"src":["*.less"],tasks:["less"]},
+		"less":{"src":"main.less","dest":"main.css"}
+	}
+}

@@ -1,0 +1,5 @@
+{
+  "tasks":{
+	  "combo":{"src" : ["a.js","b.js"],"dest" : "ab.js","min_file" : true}
+	}
+}

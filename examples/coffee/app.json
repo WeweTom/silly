@@ -1,9 +1,5 @@
 {
-  "config" : {
-    "coffee" : {
-      "a" : {
-        "src" : "main.coffee"
-      }
-    }
-  }
+  "tasks":{
+	  "coffee":{"src" : "main.coffee"}
+	}
 }

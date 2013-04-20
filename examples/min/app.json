@@ -1,14 +1,5 @@
 {
-  "pkgroot":"../",
-	"config":{
-			"var" : {
-				"timestamp" : "20120312"
-			},
-			"min" : {
-				"a" : {
-					"src" : ["moda.js"],
-					"dest" : "moda-min.js"
-				}
-			}
+	"tasks":{
+		"min" : {"src" : ["moda.js"],"dest" : "moda-min.js"}
 	}
 }
