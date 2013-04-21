@@ -1,9 +1,9 @@
 ## What is "Silly" 
 
-"Silly" is a builder for frontend engineer
+"Silly" is a task runner
 
 ## "犀利"是什么？
-"犀利"是一个为前端量身定制的打包工具
+"犀利"是一个为前端量身定制的任务执行工具
 
 对于一般用户来说，有个package.json和gruntfile是个比较烦人的事情，虽然他们可以自动生成。但是我总觉得Grunt把问题复杂化了:安装了一个Grunt-cli还要安装local的Grunt，还要init，生成配置文件，当然，也可以说Grunt具有比较大的灵活性，但是牺牲的是易用性。
 
@@ -15,11 +15,12 @@ $ npm install silly-builder -g
 - 零配置运行
   
   如果你按照标准的kissy匿名模块来组织代码，那么可以在不进行任何配置的情况下进行
+
   kissy的模块依赖分析、合并、压缩具体请看examples/ks-min
 
 ```shell
 $ cd examples/ks-min
-$ silly run index.js  # 会自动搜索index.js的依赖，并将其合并压缩为一个index-min.js文件
+$ silly compile index.js  # 会自动搜索index.js的依赖，并将其合并压缩为一个index-min.js文件
 ```
 
 - 组合任务
@@ -39,7 +40,9 @@ $ silly run index.js  # 会自动搜索index.js的依赖，并将其合并压缩为一个index-min.
 ```
 
   这是配置文件描述的是，两个合并任务（比那个GruntFile直观多了吧！）：
+
   第一个任务是combo，包含两个子任务，将当前目录下的a.js b.js合并成一个叫ab.js的文件，将c.js d.js合并为cd.js
+
   第二个任务是css-cobmo,不包含子任务，将a.css b.css合并为ab.css，并且执行cssmin压缩
 
 - 执行这个任务清单
@@ -270,3 +273,6 @@ $ silly run
 #### SinglPage
 
 #### SinglUpPage
+
+## 联系我
+   cookieu<AT>gmail.com
