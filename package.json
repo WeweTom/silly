@@ -2,6 +2,7 @@
   "author": "cookieu@gmail.com",
   "name": "silly-builder",
   "version": "0.0.3",
+	"preferGlobal":true,
   "bin":{"silly":"./bin/cli"},
   "main":"sb.js",
   "repository": {
@@ -15,8 +16,9 @@
     "uglify-js": ">= 1.3.2",
     "underscore": "~1.4.3",
     "mustache": "~0.7.2",
-    "optimist": "~0.3.5",
     "ycssmin": "~1.0.1",
+    "iconv-lite": "*",
+    "commander": "~1.1.1",
 		"q":"~0.8.12",
     "matchfiles":"~0.0.1",
     "mkdirp":"~0.3.0"

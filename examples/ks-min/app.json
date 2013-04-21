@@ -5,7 +5,7 @@
 	},
 	"tasks":{
 		"ksmin" : [
-      {"src" : ["index.js"],"dest" : "../ks-min-{{context.attrs.timestamp}}/index-min.js"}
+      {"src" : ["index.js"],"dest" : "../ks-min-{{self.attrs.timestamp}}/index-min.js"}
     ]
 	}
 }

@@ -28,7 +28,7 @@ module.exports = function(cfg,SILLY){
           filename:filename,
           basename:Path.basename(abs,'.js'),
           extname:Path.extname(abs,'.js')
-        },SILLY.var)
+        },{self:SILLY.config})
 
       filename = sillyTool.makemoney(cfg.dest,$)
       filename = Mustache.render(cfg.dest,data)

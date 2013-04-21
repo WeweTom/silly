@@ -40,7 +40,7 @@ module.exports = function(cfg,SILLY){
             filename:filename,
             basename:Path.basename(abs,'.less'),
             extname:Path.extname(abs)
-          },SILLY.var)
+          },{self:SILLY.config})
           , filename
           , $ = $$[key]
 

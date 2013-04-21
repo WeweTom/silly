@@ -21,9 +21,7 @@ module.exports = function(cfg,SILLY){
                var errorstack = []
                 tasks &&
                  tasks.forEach(function(taskname){
-                   var taskconfig = config[taskname]
-                     , task = SILLY.Tasks[taskname]
-                   task = task && require(task)
+                   var task = require(SILLY.Tasks[taskname])
                    if(!task){
                      try{
                        task = require(taskname)
@@ -34,28 +32,36 @@ module.exports = function(cfg,SILLY){
                        errorstack.push('npm instasll '+taskname)
                      }
                    }
-
-                   if(!task){
-                     return
-                   }
-
-                   _.chain(taskconfig)
-                   .pairs(taskconfig)
-                   .map(function(value,key){
-                     var config = value[1]
-                       , t = {
-                         taskname:key
-                       , taskconfig:config
+                   cfg.tasks.forEach(function(taskname){
+                     if(SILLY.Tasks[taskname]){
+                       var taskconfigs = SILLY.config.tasks[taskname]
+                       task = require(SILLY.Tasks[taskname]);
+                       if(!task){
+                         try{
+                           task = require(taskname)
+                         }catch(e){
+                         }
                        }
 
-                     task(config,SILLY)
-                     .then(function(){
+                       if(toString.call(taskconfigs != "[object Array]")){
+                         taskconfigs = [taskconfigs]
+                       }
 
-                     })
-                     .fail(function(){
-
-                     })
-                   })
+                       if(task){
+                         taskconfigs.forEach(function(taskconfig){
+                           task(taskconfig,SILLY)
+                           .then(function(){
+                             console.log('[success]');
+                           })
+                           .fail(function(){
+                             console.log('[error]');
+                           });
+                         });
+                       }else{
+                         return;
+                       }
+                     }
+                   });
                  })
              },200))
   })

@@ -69,7 +69,8 @@ module.exports = function(cfg,SILLY){
                      filename:filename,
                      basename:Path.basename(abs,'.js'),
                      extname:Path.extname(abs,'.js')
-                   },SILLY.var)
+                   },{self:SILLY.config})
+
                    , filename
                    , modname_org
                    , modname_res
@@ -170,7 +171,9 @@ module.exports = function(cfg,SILLY){
         main:initmodname
       })
     }
-    console.log(local+online+daily)
+    var ret = local+online+daily;
+    return ret;
+    // console.log(ret)
   }
   return promise
 }

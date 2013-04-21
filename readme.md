@@ -5,32 +5,12 @@
 ## "Ï¬Àû"ÊÇÊ²Ã´£¿
 "Ï¬Àû"ÊÇÒ»¸öÎªÇ°¶ËÁ¿Éí¶¨ÖÆµÄ´ò°ü¹¤¾ß
 
+¶ÔÓÚÒ»°ãÓÃ»§À´Ëµ£¬ÓĞ¸öpackage.jsonºÍgruntfileÊÇ¸ö±È½Ï·³ÈËµÄÊÂÇé£¬ËäÈ»ËûÃÇ¿ÉÒÔ×Ô¶¯Éú³É¡£µ«ÊÇÎÒ×Ü¾õµÃGrunt°ÑÎÊÌâ¸´ÔÓ»¯ÁË:°²×°ÁËÒ»¸öGrunt-cli»¹Òª°²×°localµÄGrunt£¬»¹Òªinit£¬Éú³ÉÅäÖÃÎÄ¼ş£¬µ±È»£¬Ò²¿ÉÒÔËµGrunt¾ßÓĞ±È½Ï´óµÄÁé»îĞÔ£¬µ«ÊÇÎşÉüµÄÊÇÒ×ÓÃĞÔ¡£
+
 ## install
 ```sh
 $ npm install silly-builder -g
 ```
-## features
-
-- ¼òµ¥µÄÅäÖÃ
-
-  Ã»ÓĞpackage.json
-
-  Ã»ÓĞgruntfile
-
-- ÈÎÎñÏµÍ³Ö»°üº¬³£ÓÃµÄÈÎÎñÏµÍ³ 
-  - `combo` jsÎÄ¼şºÏ²¢
-  - `min` jsÎÄ¼şÑ¹ËõÎÄ¼ş
-  - `ksmin` Õë¶ÔkissyµÄÒ»¸ö¼¯³ÉÈÎÎñ£¬°üÀ¨jsµÄÄ£¿é·ÖÎö¡¢ºÏ²¢¡¢Ñ¹ËõÓÚÒ»Ìå
-  - `css-combo` cssºÏ²¢
-  - `less` less±àÒë£¬ÅäºÏwatchÈÎÎñÊ¹ÓÃ
-  - `coffee` coffee script ½Å±¾±àÒë£¬ÅäºÏwatchÈÎÎñÊ¹ÓÃ
-  - `watch` ¼àÌıÎÄ¼ş±ä»¯£¬È»ºóÖ´ĞĞÏà¹ØÈÎÎñ
-  - `html2tpl` ½«html×ª»¯ÎªÄ£°å
-  - `csscombo` TODO
-
-- Ä¿Â¼Ä£°å
-  ¿ìËÙÉú³É³£¼ûµÄÄ¿Â¼Ä£°å
-
 ## getting started
 - ÁãÅäÖÃÔËĞĞ
   
@@ -42,38 +22,27 @@ $ cd examples/ks-min
 $ silly run index.js  # »á×Ô¶¯ËÑË÷index.jsµÄÒÀÀµ£¬²¢½«ÆäºÏ²¢Ñ¹ËõÎªÒ»¸öindex-min.jsÎÄ¼ş
 ```
 
-- ¸´ÔÓµÄ×éºÏÈÎÎñ
+- ×éºÏÈÎÎñ
 
-  Í¨¹ı´´½¨app.jsonÎÄ¼ş£¬À´ÅäÖÃÖ´ĞĞ¸´ÔÓµÄ×éºÏÈÎÎñ
+  Í¨¹ı´´½¨app.jsonÎÄ¼ş(×÷ÓÃÀàËÆÓÚGruntFile£¬µ«ÊÇ¸ü¼Ó¼òµ¥Ö±½Ó)£¬À´ÅäÖÃÖ´ĞĞ×éºÏÈÎÎñ
 
 ```javascript
 {
-  "config" : {
-    "combo" : {
-      "µÚÒ»¸öjs comboÈÎÎñ" : {
-        "src" : ["a.js","b.js"],
-        "dest" : "ab.js",
-		"min_file" : true
-      },
-      "µÚ¶ş¸öjs comboÈÎÎñ" : {
-        "src" : ["c.js","d.js"],
-        "dest" : "cd.js"
-      }
-    },
-    "css-combo" : {
-      "µÚÒ»¸öcss comboÈÎÎñ" : {
-        "src" : ["a.css","b.css"],
-        "dest" : "ab.css",
-		"min_file" : true
-      }
-    }
+  "tasks" : {
+    "combo" : [
+	  {"src" : ["a.js","b.js"],"dest" : "ab.js","min_file" : true},
+	  {"src" : ["c.js","d.js"],"dest" : "cd.js"}
+      ],
+    "css-combo" : {"src" : ["a.css","b.css"],"dest" : "ab.css","min_file" : true}
   }
 }
 ```
 
-  ±íÊ¾µÄÒâË¼ÊÇ½«µ±Ç°Ä¿Â¼ÏÂµÄa.js b.jsºÏ²¢³ÉÒ»¸ö½Ğab.jsµÄÎÄ¼ş
+  ÕâÊÇÅäÖÃÎÄ¼şÃèÊöµÄÊÇ£¬Á½¸öºÏ²¢ÈÎÎñ£¨±ÈÄÇ¸öGruntFileÖ±¹Û¶àÁË°É£¡£©£º
+  µÚÒ»¸öÈÎÎñÊÇcombo£¬°üº¬Á½¸ö×ÓÈÎÎñ£¬½«µ±Ç°Ä¿Â¼ÏÂµÄa.js b.jsºÏ²¢³ÉÒ»¸ö½Ğab.jsµÄÎÄ¼ş£¬½«c.js d.jsºÏ²¢Îªcd.js
+  µÚ¶ş¸öÈÎÎñÊÇcss-cobmo,²»°üº¬×ÓÈÎÎñ£¬½«a.css b.cssºÏ²¢Îªab.css£¬²¢ÇÒÖ´ĞĞcssminÑ¹Ëõ
 
-- Ö´ĞĞÕâ¸öÈÎÎñ
+- Ö´ĞĞÕâ¸öÈÎÎñÇåµ¥
 
 ```shell
 silly run -c app.json
@@ -91,18 +60,12 @@ silly run
 
 ```css
 {
-  "config" : {
-    "css-combo" : {
-      "µÚÒ»¸öcssºÏ²¢ÈÎÎñ" : {
-        "src" : ["a.css","b.css"],
-        "min_code" : true,
-        "dest" : "ab.css"
-      }
-    }
+  "tasks" : {
+    "css-combo" : {"src" : ["a.css","b.css"],"min_code" : true,"dest" : "ab.css"}
   }
 }
 ```
-  min_code±íÊ¾»áÈ¥³ı¶àÓàµÄ¿Õ¸ñ£¬ÄÚ²¿µ÷ÓÃcss_min¿â£¬ÏàÓ¦µÄ£¬jsÄÚ²¿µ÷ÓÃuglifyÀ´Ñ¹Ëõ
+  min_code±íÊ¾»áÈ¥³ı¶àÓàµÄ¿Õ¸ñ£¬ÄÚ²¿µ÷ÓÃcssmin¿â£¬ÏàÓ¦µÄ£¬jsÄÚ²¿µ÷ÓÃuglifyÀ´Ñ¹Ëõ
 
 ### less ±àÒë
 ÒªÖ´ĞĞless±àÒë¹¦ÄÜ£¬±ØĞëÏÈ°²×°lessc
@@ -131,13 +94,8 @@ silly ºÍ GruntJs»¹ÊÇÓĞºÜ´óµÄ²»Í¬µÄ£¬¼òµ¥À´½²£¬sillyÕıÈçËüÃû×ÖËù±í´ïµÄÄÇÑù£¬Òª¼òµ
 
 ```javascript
 {
-  "config" : {
-    "less" : {
-      "µÚÒ»¸ölessÈÎÎñ" : {
-        "src" : "your_page.less",
-        "dest" : "your_page.css"
-      }
-    }
+  "tasks" : {
+    "less" : {"src" : "your_page.less","dest" : "your_page.css"}
   }
 }
 ```
@@ -145,41 +103,26 @@ silly ºÍ GruntJs»¹ÊÇÓĞºÜ´óµÄ²»Í¬µÄ£¬¼òµ¥À´½²£¬sillyÕıÈçËüÃû×ÖËù±í´ïµÄÄÇÑù£¬Òª¼òµ
 
 ```javascript
 {
-  "config" : {
-    "less" : {
-      "µÚÒ»¸ölessÈÎÎñ" : {
-        "src" : "your_page.less",
-        "dest" : "your_page.css"
-      },
-      "µÚ¶ş¸ölessÈÎÎñ" : {
-        "src" : "your_page_2.less",
-        "dest" : "your_page_2.css"
-      }
-    }
+  "tasks" : {
+    "less" : [
+  	  {"src" : "your_page.less","dest" : "your_page.css"},
+	  {"src" : "your_page_2.less","dest" : "your_page_2.css"}    
+	]
   }
 }
 ```
 
 ¸üÖØÒªµÄÊÇ£¬Äã¿ÉÒÔ½«less±àÒëÈÎÎñºÍwatchÈÎÎñ×éºÏÆğÀ´ÓÃ
+
 ### watch ÈÎÎñ:¼àÌıÎÄ¼ş±ä»¯ºóÖ´ĞĞÈÎÎñ
 
 ±ÈÈç£¬¼àÌıµ±Ç°Ä¿Â¼ÏÂµÄËùÓĞlessÎÄ¼ş£¬µ±ÓĞlessÎÄ¼ş·¢Éú±ä»¯ºó£¬Ö´ĞĞless±àÒëÈÎÎñ
 
 ```javascript
 {
-  "config" : {
-    "watch" : {
-      "Ò»¸öwatchÈÎÎñ" : {
-        "src" : ["*.less],
-        "tasks" : ["less"]
-      }
-    },
-    "less" : {
-      "Ò»¸öless±àÒëÈÎÎñ" : {
-        "src" : ["main.less"],
-        "dest" : "main.css"
-      }
-    }
+  "tasks" : {
+    "watch" : {"src" : ["*.less],"tasks" : ["less"]},
+    "less" : {"src" : ["main.less"],"dest" : "main.css"}
   }
 }
 ```
@@ -189,17 +132,13 @@ coffee scriptÒòÆäÓÅÑÅ¼ò½à£¬ÒÑ¾­±»Ô½À´Ô½¶àµÄÇ°¶Ë¹¥³ÇÊ¦Ê¹ÓÃ£¬µ«ÊÇcoffeeÖ®Óëjs£¬ÕıÈ
 ÒªÖ´ĞĞÕâ¸öÈÎÎñÒ²ÒªÔ¤ÏÈ°²×°coffee-script±àÒëÆ÷
 
 ```shell
-$ npm install coffee-script -g
+$ npm install coffee-script -g  # ¶ÔÓÚunbuntu»òĞíÒªÇó¼ÓÉÏsudo 
 ```
 Ò»¸öcoffeeÈÎÎñµÄÃèÊöÊÇÕâÑùµÄ:
 ```javascript
 {
-  "config" : {
-    "coffee" : {
-      "Ò»¸öcoffee±àÒëÈÎÎñ" : {
-        "src" : "main.coffee"
-      }
-    }
+  "tasks" : {
+    "coffee" : {"src" : "main.coffee"}
   }
 }
 ```
@@ -210,28 +149,13 @@ $ npm install coffee-script -g
 
 ```javascript
 {
-  "config" : {
-    "watch" : {
-      "less¼à²âÈÎÎñ" : {
-        "src" : ["*.less],
-        "tasks" : ["less"]
-      },
-      "coffe¼à²âÈÎÎñ" : {
-        "src" : ["*.coffee],
-        "tasks" : ["coffee"]
-      }
-    },
-    "less" : {
-      "±àÒëless" : {
-        "src" : ["*.less"],
-        "dest" : "{{basename}}.css"
-      }
-    },
-    "coffee" : {
-      "±àÒëcoffee" : {
-        "src" : "*.coffee"
-      }
-    }
+  "tasks" : {
+    "watch" : [
+	  {"src" : ["*.less],"tasks" : ["less"]},
+	  {"src" : ["*.coffee],"tasks" : ["coffee"]}
+	],
+    "less" : {"src" : ["*.less"],"dest" : "{{basename}}.css"},
+    "coffee" : {"src" : "*.coffee"}
   }
 }
 ```
@@ -247,17 +171,10 @@ $ compass -v
 
 ```javascript
 {
-  "config" : {
-    "watch" : {
-      "a watch task" : {
-        "src" : ["sass/*.scss"],
-        "tasks" : ["compass"]
-      }
-    },
+  "tasks" : {
+    "watch" : {"src" : ["sass/*.scss"],"tasks" : ["compass"]},
     "compass" : {
-      "compass task" : {
         "src" : "." //µ±Ç°Ä¿Â¼£¬¼´config.rbËùÔÚµÄÄ¿Â¼
-      }
     }
   }
 }
@@ -311,16 +228,30 @@ return ""
 
 ```javascript
 {
-  "config" : {
-    "html2tpl" : {
-      "Éú³ÉkissyÄ£°å" : {
-        "src" : ["pop.html"],
-        "dest" : "{{basename}}.js"
-      }
-    }
+  "tasks" : {
+    "html2tpl" : {"src" : ["pop.html"],"dest" : "{{basename}}.js"}
   }
 }
 ```
+
+## features
+
+- ÅäÖÃ¼òµ¥
+  
+- ³£ÓÃµÄÈÎÎñÏµÍ³ 
+  - `combo` jsÎÄ¼şºÏ²¢
+  - `min` jsÎÄ¼şÑ¹ËõÎÄ¼ş
+  - `ksmin` Õë¶ÔkissyµÄÒ»¸ö¼¯³ÉÈÎÎñ£¬°üÀ¨jsµÄÄ£¿é·ÖÎö¡¢ºÏ²¢¡¢Ñ¹ËõÓÚÒ»Ìå
+  - `css-combo` cssºÏ²¢
+  - `less` less±àÒë£¬ÅäºÏwatchÈÎÎñÊ¹ÓÃ
+  - `coffee` coffee script ½Å±¾±àÒë£¬ÅäºÏwatchÈÎÎñÊ¹ÓÃ
+  - `watch` ¼àÌıÎÄ¼ş±ä»¯£¬È»ºóÖ´ĞĞÏà¹ØÈÎÎñ
+  - `html2tpl` ½«html×ª»¯ÎªÄ£°å
+  - `csscombo` TODO
+
+- Ä¿Â¼Ä£°å
+  ¿ìËÙÉú³É³£¼ûµÄÄ¿Â¼Ä£°å
+
 ## Ä¿Â¼Ä£°åÖ§³Ö TODO
 
 ### intro
@@ -339,5 +270,3 @@ $ silly run
 #### SinglPage
 
 #### SinglUpPage
-
-

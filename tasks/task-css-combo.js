@@ -44,7 +44,7 @@ module.exports = function(cfg,SILLY){
     .then(function(buffers){
       var allcontent = ''
         , data = _.extend({
-        },SILLY.var)
+        },{self:SILLY.config})
 
       buffers.forEach(function(buffer,key){
         var filecontent = buffer.toString()
@@ -57,7 +57,7 @@ module.exports = function(cfg,SILLY){
       if(typeof cfg.min_code == "undefined" || cfg.min_code){
         allcontent = cssmin(allcontent)
       }
-      
+
       var filename = Mustache.render(cfg.dest,data)
 
       filename = Path.resolve(SILLY.root,filename)

@@ -1,14 +1,15 @@
 // -*- coding: utf-8-unix; -*-
 var fs = require('fs')
+  , npmpkg = require('./package.json')
+  // , charset = require('jschardet') //这个探测很残废
   , _ = require('underscore')
   , Q = require('q')
   , Path = require('path')
   , tool = require('./lib/tool')
   , matchfiletool = require('matchfiles/lib/util')
   , pipe = require('./lib/pipe')
-  , optimist = require('optimist')
+  , program = require('commander')
   , Mustache = require('mustache')
-  , argv = optimist.argv
   , ConfigParser = require('./lib/config-parser')
   , TaskCommon = require('./tasks/task-async-common')
   , TaskGenerator = require('./lib/task-generator')
@@ -20,47 +21,102 @@ var fs = require('fs')
   , TemplateManager = require('./lib/template-manager')
   , uglify = require("uglify-js")
   , deptool = require('./lib/parse-deps-tool')
+  , cwd = process.cwd()
+  , programargs
+  , cmd = 'silly'
+  , subcmd
+  , commandWhiteList = ['init','run','compile','watch']
+  , cmdTaskExtWl = ['.js','.less','.coffee']
+  , single = pargv[3] && cmdTaskExtWl.indexOf(pargv[3]) == -1
+function help(){
+  console.log('')
+  console.log('  Usage: silly [command_name] [options]');
+  console.log('')
+  console.log('  command_name:')
+  console.log('')
+  console.log('    '+commandWhiteList.join(' '))
 
+  console.log('')
+  console.log('  Options: ')
+  console.log('')
+  console.log('    -h, --help')
+  console.log('    -c, --config_json   a json config file')
+  console.log('')
+
+  console.log('  Example: ')
+  console.log('')
+  console.log('    silly init pagename')
+  console.log('    silly compile filename.less')
+  console.log('    silly compile filename.coffee')
+  console.log('')
+}
+subcmd = pargv[2]
+if(commandWhiteList.indexOf(subcmd) == '-1'){
+  help();
+  process.exit();
+}
 function exp(){
-  var cwd = process.cwd()
-    , cfgfile = argv.c || argv.config || 'app.json'
-    , cmd = pargv[2]
-  switch(cmd){
+  program.version(npmpkg.version);
+  switch(subcmd){
     case "init":
-    init();break;
-    default:
-    run(cwd,cfgfile);break;
+    program.usage(subcmd+' [options] [values ...]')
+    program.option('-t, --type <string>','input a folder type')
+    program.parse(pargv);
+    break;
+    case "run":
+    program.usage(subcmd+' [options] [values ...]')
+    program.option('-c, --config_json <string>','input a json config')
+    case "compile":
+    program.usage(subcmd+' filename.less [filename.less]')
+    case "watch":
+    program.usage(subcmd+' filename.less [filename.less]')
+    break;
+    //run(cwd,cfgfile);break;
+  }
+  program.parse(pargv);
+  var cfgfile = program.config || 'app.json'
+  if(subcmd == 'init'){
+    init();
+  // }else if(subcmd == 'watch'){
+  }else{
+    run(cwd,cfgfile);
   }
 }
+
 module.exports = exp;
 // 添加目录模板
+var folderTypeWhiteList = ['kissypie']
+
 function init(){
-  argv = optimist.alias('t','type')
-         .describe('t','初始项目类型')
-         // .alias('d','dir')
-         // .describe('d','初始目录名')
-         .alias('f','force')
-         .describe('f','不论当前目录是否为空，强制初始化目录[小心!]')
-         .usage('Init a abc task in current directory.\nUsage: silly')
-         // .demand(['d'])
-         .argv
+  var dirtype;
 
-  var cwd = process.cwd()
-    , dirtype = argv.t || 'kissypie'
-    , dirname = pargv[3]
-    , force = !!argv.f
+  if(program.type && folderTypeWhiteList.indexOf(program.type) > -1){
+    dirtype = program.type;
+  }else{
+    dirtype = 'kissypie';
+  }
 
+  var dirname = pargv[3]
+    , force = !!program.force
+
+  if(dirname && dirname[0] == '-'){
+    console.log('usage :');
+    console.log('  silly init PageName OPTIONS');
+    console.log('');
+    console.log('  OPTIONS');
+    console.log('  -f : force init');
+    process.exit();
+  }
   switch(dirtype){
     case 'kissypie':
-      TemplateManager.initKissyPie(dirname,cwd,force)
+      TemplateManager.initKissyPie(dirname,cwd,force,exp)
       .then(function(){
       })
       .fail(function(err){
         console.log(err)
+        program.help();
       })
       break;
-    default:
-      TemplateManager.initKissyPie(dirname,cwd)
   }
 }
 
@@ -84,7 +140,10 @@ function run(cwd,cfgfile){
   TaskCommon.read(cfgfile)
   .then(function(buffer){
     // jsonconfig = JSON.parse(buffer.toString())
-    jsonconfig = eval('('+buffer.toString()+')')
+
+    // nodejs 对多编码的支持真是……
+    // jsonconfig = eval('('+tool.buf2string(buffer)+')');
+    jsonconfig = eval('('+buffer.toString()+')');
 
     SILLY.config = jsonconfig
 
@@ -95,6 +154,7 @@ function run(cwd,cfgfile){
 
   })
   .fail(function(err){
+    console.log(err);
     console.warn('>>>does not find find config file,use current dir as pkg root')
     pkgroot = cwd
     pkgname = tool.getPkgnameFromDir(pkgroot)
@@ -102,14 +162,13 @@ function run(cwd,cfgfile){
   .fin(function(){
     SILLY.pkgroot = pkgroot
     SILLY.pkgname = pkgname
-    if(jsonconfig){
+    if(jsonconfig && !single){
       var configparser
         , hasnottask = true
         , errorstack = []
       configparser = new ConfigParser()
       configparser.on('task',function(e){
         hasnottask = false
-
         if(e.taskname == 'include'){
           console.log('>>>execute include task')
           var src = e.taskconfig.src
@@ -170,13 +229,12 @@ function run(cwd,cfgfile){
       configparser.parse(jsonconfig)
     }else{
       var files;
-      if(pargv[2] == 'run'){
-        files = pargv.slice(3);
-      }else{
-        files = pargv.slice(2);
-      }
+      files = pargv.slice(3);
       if(files.length){
-        files.forEach(function(file){
+        if(subcmd == 'watch'){
+          // do watch task
+        }else{
+          files.forEach(function(file){
           var dest
             , taskconfig
             , task
@@ -196,6 +254,11 @@ function run(cwd,cfgfile){
               dest : dest
             }
             task = require(Tasks.less);
+          }else if(extname == '.coffee'){
+            taskconfig = {
+              src:[file]
+            }
+            task = require(Tasks.coffee);
           }else{
             console.log('>>>')
             console.log('       只能执行silly run script_name.js')
@@ -205,7 +268,7 @@ function run(cwd,cfgfile){
           }
           taskqueue.push(TaskGenerator(task,taskconfig))
         })
-        console.log('>>>executing default task ...')
+        }
         pipe(SILLY,taskqueue)
         .then(function(){
           console.log('>>>done')
@@ -229,10 +292,10 @@ exp.Q = Q
 exp.tool = tool
 exp.matchfiles = matchfiles
 exp._ = _
-exp.optimist = optimist
 exp.Mustache = Mustache
 exp.pipe = pipe
 exp.asynctasks = TaskCommon
 exp.mkdirp = mkdirp
 exp.uglify = uglify
 exp.deptool = deptool
+exp.program = program

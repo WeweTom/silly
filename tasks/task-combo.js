@@ -42,7 +42,7 @@ module.exports = function(cfg,SILLY){
     .then(function(buffers){
       var allcontent = ''
         , data = _.extend({
-        },SILLY.var)
+        },{self:SILLY.config})
 
       buffers.forEach(function(buffer,key){
         var filecontent = buffer.toString()
