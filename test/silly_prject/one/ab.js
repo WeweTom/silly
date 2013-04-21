@@ -1,1 +1,0 @@
-KISSY.add("mod/a",function(){alert("")}),KISSY.add("mod/b",function(){alert("\u6a21\u5757bbbbbbbbbbbbbbbb")});
