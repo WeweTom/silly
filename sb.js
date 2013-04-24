@@ -137,13 +137,19 @@ function run(cwd,cfgfile){
     root = Path.dirname(cfgfile)
   }
   SILLY.root = root
+
   TaskCommon.read(cfgfile)
   .then(function(buffer){
     // jsonconfig = JSON.parse(buffer.toString())
 
     // nodejs 对多编码的支持真是……
     // jsonconfig = eval('('+tool.buf2string(buffer)+')');
-    jsonconfig = eval('('+buffer.toString()+')');
+    try{
+      jsonconfig = eval('('+buffer.toString()+')');
+    }catch(e){
+      console.log(e);
+      process.exit();
+    }
 
     SILLY.config = jsonconfig
 
@@ -162,6 +168,7 @@ function run(cwd,cfgfile){
   .fin(function(){
     SILLY.pkgroot = pkgroot
     SILLY.pkgname = pkgname
+
     if(jsonconfig && !single){
       var configparser
         , hasnottask = true

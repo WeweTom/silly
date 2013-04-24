@@ -13,11 +13,11 @@ module.exports = function(cfg,SILLY){
     , config = jsonconfig.config
     , tasks = cfg.tasks
 
+
   stream = matchfiles(SILLY.root,cfg.src,cfg.exclude)
   stream.on('file',function(abs,filename,extname){
     fs.watch(abs
             ,tool.throttle(function(){
-               console.log('watch task>>>',filename,'changed')
                var errorstack = []
                 tasks &&
                  tasks.forEach(function(taskname){
