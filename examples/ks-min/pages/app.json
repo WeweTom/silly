@@ -1,0 +1,11 @@
+{
+  "pkgroot":"../../", // 包名
+	"attrs" : {
+ 		"timestamp" : "20120312"
+	},
+	"tasks":{
+		"ksmin" : [
+      {"src" : ["../mods/index.js"],"dest" : "{{basename}}-min.js"}
+    ]
+	}
+}

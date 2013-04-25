@@ -150,12 +150,10 @@ function run(cwd,cfgfile){
       console.log(e);
       process.exit();
     }
-
     SILLY.config = jsonconfig
 
     pkgroot = jsonconfig.pkgroot || cwd
     pkgroot = Path.resolve(pkgroot)
-
     pkgname = tool.getPkgnameFromDir(pkgroot)
 
   })
@@ -223,14 +221,14 @@ function run(cwd,cfgfile){
         }
         pipe(SILLY,taskqueue)
         .then(function(){
-          // console.log('[success]')
+          console.log('[success]')
         })
         .fail(function(err){
           console.log('[failed]')
           console.log(err)
         })
         .fin(function(){
-          // console.log('[end]')
+          console.log('[end]')
         })
       })
       configparser.parse(jsonconfig)

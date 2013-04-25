@@ -1,0 +1,1 @@
+KISSY.add("examples/ks-min/pages/modc",function(){}),KISSY.add("examples/ks-min/pages/modb",function(){}),KISSY.add("examples/ks-min/pages/moda",function(){},{requires:["examples/ks-min/pages/modb","examples/ks-min/pages/modc"]}),KISSY.add("examples/ks-min/pages/index",function(){},{requires:["examples/ks-min/pages/moda","examples/ks-min/pages/modb"]});
