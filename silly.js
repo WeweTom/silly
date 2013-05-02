@@ -26,7 +26,7 @@ var fs = require('fs')
   , subcmd
   , commandWhiteList = ['init','run','compile','watch']
   , cmdTaskExtWl = ['.js','.less','.coffee']
-  , single = pargv[3] && cmdTaskExtWl.indexOf(pargv[3]) == -1
+
 function help(){
   console.log('')
   console.log('  Usage: silly [command_name] [options]');
@@ -63,8 +63,9 @@ function exp(){
     program.parse(pargv);
     break;
     case "run":
-    program.usage(subcmd+' [options] [values ...]')
-    program.option('-c, --config_json <string>','input a json config')
+    program.usage(subcmd+' tasks.json')
+    // program.usage(subcmd+' [options] [values ...]')
+    // program.option('-c, --config_json <string>','input a json config')
     case "compile":
     program.usage(subcmd+' filename.less [filename.less]')
     case "watch":
@@ -73,7 +74,15 @@ function exp(){
     //run(cwd,cfgfile);break;
   }
   program.parse(pargv);
-  var cfgfile = program.config || 'app.json'
+  // var cfgfile = program.config || 'app.json'
+  var cfgfile;
+  if(subcmd == 'run'){
+    if(pargv[3]){// task.json
+      cfgfile = pargv[3];
+    }else{
+      cfgfile = 'tasks.json';
+    }
+  }
   if(subcmd == 'init'){
     init();
   // }else if(subcmd == 'watch'){
@@ -129,44 +138,21 @@ function run(cwd,cfgfile){
 
   SILLY.Tasks = Tasks
 
-  if(!matchfiletool.isAbsolutePath(cfgfile)){
+  if(cfgfile && !matchfiletool.isAbsolutePath(cfgfile)){
     cfgfile = Path.resolve(cwd,cfgfile)
     root = Path.dirname(cfgfile)
   }else{
     root = Path.dirname(cfgfile)
   }
   SILLY.root = root
-
-  TaskCommon.read(cfgfile)
-  .then(function(buffer){
-    // jsonconfig = JSON.parse(buffer.toString())
-
-    // nodejs 对多编码的支持真是……
-    // jsonconfig = eval('('+tool.buf2string(buffer)+')');
-    try{
-      jsonconfig = eval('('+buffer.toString()+')');
-    }catch(e){
-      console.log(e);
-      process.exit();
-    }
-    SILLY.config = jsonconfig
-
-    pkgroot = jsonconfig.pkgroot || cwd
-    pkgroot = Path.resolve(pkgroot)
-    pkgname = tool.getPkgnameFromDir(pkgroot)
-
-  })
-  .fail(function(err){
-    console.log(err);
-    console.warn('>>>does not find find config file,use current dir as pkg root')
+  function err(){
     pkgroot = cwd
     pkgname = tool.getPkgnameFromDir(pkgroot)
-  })
-  .fin(function(){
+  }
+  function fin(){
     SILLY.pkgroot = pkgroot
     SILLY.pkgname = pkgname
-
-    if(jsonconfig && !single){
+    if(jsonconfig){
       var configparser
         , hasnottask = true
         , errorstack = []
@@ -239,39 +225,39 @@ function run(cwd,cfgfile){
           // do watch task
         }else{
           files.forEach(function(file){
-          var dest
-            , taskconfig
-            , task
-            , extname = Path.extname(file);
-          if(extname == '.js'){
-            dest = tool.transformfilename(file,'.js','-min.js')
-            taskconfig = {
-              dest:dest,
-              src:[file],
-              combo_file:true
+            var dest
+              , taskconfig
+              , task
+              , extname = Path.extname(file);
+            if(extname == '.js'){
+              dest = tool.transformfilename(file,'.js','-min.js')
+              taskconfig = {
+                dest:dest,
+                src:[file],
+                combo_file:true
+              }
+              task = require(Tasks.ksmin)
+            }else if(extname == '.less'){
+              dest = tool.transformfilename(file,'.less','-min.css')
+              taskconfig = {
+                src : [file],
+                dest : dest
+              }
+              task = require(Tasks.less);
+            }else if(extname == '.coffee'){
+              taskconfig = {
+                src:[file]
+              }
+              task = require(Tasks.coffee);
+            }else{
+              console.log('>>>')
+              console.log('       只能执行silly run script_name.js')
+              console.log('          或者：');
+              console.log('       只能执行silly run less_file.less')
+              return;
             }
-            task = require(Tasks.ksmin)
-          }else if(extname == '.less'){
-            dest = tool.transformfilename(file,'.less','-min.css')
-            taskconfig = {
-              src : [file],
-              dest : dest
-            }
-            task = require(Tasks.less);
-          }else if(extname == '.coffee'){
-            taskconfig = {
-              src:[file]
-            }
-            task = require(Tasks.coffee);
-          }else{
-            console.log('>>>')
-            console.log('       只能执行silly run script_name.js')
-            console.log('          或者：');
-            console.log('       只能执行silly run less_file.less')
-            return;
-          }
-          taskqueue.push(TaskGenerator(task,taskconfig))
-        })
+            taskqueue.push(TaskGenerator(task,taskconfig))
+          })
         }
         pipe(SILLY,taskqueue)
         .then(function(){
@@ -288,7 +274,39 @@ function run(cwd,cfgfile){
         console.log('          只能执行silly run less_file.less')
       }
     }
-  })
+  }
+
+  if(cfgfile){
+    TaskCommon.read(cfgfile)
+    .then(function(buffer){
+      // jsonconfig = JSON.parse(buffer.toString())
+
+      // nodejs 对多编码的支持真是……
+      // jsonconfig = eval('('+tool.buf2string(buffer)+')');
+      try{
+        jsonconfig = eval('('+buffer.toString()+')');
+      }catch(e){
+        console.log(e);
+        process.exit();
+      }
+
+      SILLY.config = jsonconfig
+
+      pkgroot = jsonconfig.pkgroot || cwd
+      pkgroot = Path.resolve(pkgroot)
+      pkgname = tool.getPkgnameFromDir(pkgroot)
+
+    })
+    .fail(function(err){
+      console.log(err);
+      console.warn('>>>does not find find config file,use current dir as pkg root')
+      err();
+    })
+    .fin(fin)
+  }else{
+    err();
+    fin();
+  }
 }
 
 // 导出可能用到的库以及工具集
