@@ -1,0 +1,5 @@
+{
+  "tasks" : {
+	  "less":{"src" : "*in.less","dest" : "{{basename}}.css"}
+	}
+}
