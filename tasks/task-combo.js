@@ -54,7 +54,7 @@ module.exports = function(cfg,SILLY){
       console.info('combo files>>>')
       console.info(combofiles.join('\n'))
 
-      if(typeof cfg.min_code == "undefined" || cfg.min_code){
+      if(cfg.min_code == undefined || cfg.min_code){
         allcontent = sillyTool.compress(allcontent)
       }
       var filename = Mustache.render(cfg.dest,data)
