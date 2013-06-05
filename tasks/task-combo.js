@@ -41,6 +41,8 @@ module.exports = function(cfg,SILLY){
     Q.all(readtasks)
     .then(function(buffers){
       var allcontent = ''
+        , comboContent
+        , comboFilename
         , data = _.extend({
         },{self:SILLY.config})
 
@@ -51,24 +53,34 @@ module.exports = function(cfg,SILLY){
         // filecontent = tool.fixrequirename(fullpath,pkgroot,pkgname,filecontent)
         allcontent = allcontent+";"+filecontent
       })
+
       console.info('combo files>>>')
       console.info(combofiles.join('\n'))
 
-      if(cfg.min_code == undefined || cfg.min_code){
+      var filename = Mustache.render(cfg.dest,data)
+      if(cfg.min_code != false){
+        if(cfg.combo_file){
+          comboContent = allcontent;
+          comboFilename = sillyTool.min2combo(filename);
+        }
         allcontent = sillyTool.compress(allcontent)
       }
-      var filename = Mustache.render(cfg.dest,data)
 
       filename = Path.resolve(SILLY.root,filename)
       commontask.mkdirp(Path.dirname(filename))
       .then(function(){
-        commontask.write(filename,allcontent)
+        var twoTask = [commontask.write(filename,allcontent)]
+        if(comboContent){
+          twoTask.push(commontask.write(comboFilename,comboContent));
+        }
+        Q.all(twoTask)
         .then(function(){
           defer.resolve(SILLY)
         })
         .fail(function(err){
           defer.reject(err)
         })
+        //commontask.write();
       })
       .fail(function(err){
         defer.reject(err)
