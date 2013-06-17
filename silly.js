@@ -39,7 +39,7 @@ function help(){
   console.log('  Options: ')
   console.log('')
   console.log('    -h, --help')
-  console.log('    -c, --config_json   a json config file')
+  // console.log('    -c, --config_json   a json config file')
   console.log('')
 
   console.log('  Example: ')
