@@ -50,10 +50,12 @@ function help(){
   console.log('')
 }
 subcmd = pargv[2]
+
 if(commandWhiteList.indexOf(subcmd) == '-1'){
   help();
   process.exit();
 }
+
 function exp(){
   program.version(npmpkg.version);
   switch(subcmd){
@@ -178,14 +180,17 @@ function run(cwd,cfgfile){
           , task = taskpath && require(taskpath)
           , taskconfig = e.taskconfig
           , taskname = e.taskname
+
         if(!task){
           try{
-            task = require(e.taskname)
-          }catch(e){
+            task = require(e.taskname);
+          }catch(err){
+            taskname = e.taskname;
+            errorstack.push('  未发现第三方插件:'+e.taskname)
+            errorstack.push('')
+            errorstack.push('  尝试下面的命令进行安装:')
+            errorstack.push('    npm instasll '+e.taskname)
             console.log(e)
-            errorstack.push('未发现第三方插件:'+taskname)
-            errorstack.push('请尝试:')
-            errorstack.push('npm instasll '+taskname)
             return
           }
         }
@@ -195,6 +200,7 @@ function run(cwd,cfgfile){
           console.error('未定义的task:'+e.taskname)
         }
       })
+
       configparser.on('end',function(){
         if(hasnottask){
           console.log('>>>未定义任何有效的任务')

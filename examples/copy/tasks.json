@@ -1,0 +1,5 @@
+{
+  "tasks":{
+    "cp":{"src":"tmp/*.js","dest":"./src"}
+  }
+}

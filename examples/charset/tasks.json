@@ -1,0 +1,5 @@
+{
+  "tasks":{
+    "charset":{"src":"tmp/*.js","dest":"src/{{filename}}","from_charset":"utf-8","to_charset":"gbk"}
+  }
+}

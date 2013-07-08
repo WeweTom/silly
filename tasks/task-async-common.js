@@ -6,6 +6,7 @@ var Q = require('q')
   , mkdirp = require('mkdirp')
   , child_process = require('child_process')
   , exec = child_process.exec
+  , iconv = require('iconv-lite')
 
 exports.read = read
 exports.write = write
@@ -77,4 +78,21 @@ exports.getdeps = function (abspath){
     defer.resolve(filepaths)
   })
   return promise
+}
+exports.charset = function(filename,from,to){
+  var defer = Q.defer()
+    , promise = defer.promise
+    , buf
+  from || (from = "utf-8");
+  read(filename,from)
+  .then(function(buf){
+    var str = iconv.decode(buf,from)
+      , b = iconv.encode(str,to)
+
+    defer.resolve(b);
+  })
+  .fail(function(err){
+    defer.reject(err)
+  });
+  return promise;
 }

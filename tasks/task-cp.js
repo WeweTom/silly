@@ -10,14 +10,14 @@ module.exports = function(cfg,SILLY){
   var defer = Q.defer()
     , promise = defer.promise
     , stream
-    , queue
+    , queue = []
+
   stream = matchfiles(SILLY.root,cfg.src,cfg.exclude)
+
   stream.on('file',function(abs,filename,extname){
-    var to
-    to = Mustache.render(cfg.dest,{
-    })
-    to = Path.resolve(SILLY.root,to)
-    queue.push(commontask.copy(abs,to))
+    var to = Path.resolve(SILLY.root,cfg.dest);
+    to = Path.join(to,filename);
+    queue.push(commontask.copy(abs,to));
   })
   stream.on('end',function(){
     Q.all(queue)

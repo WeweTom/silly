@@ -7,7 +7,7 @@ module.exports = function(cfg,SILLY){
   var defer = Q.defer()
     , promise = defer.promise
     , stream
-    , queue
+    , queue = []
   stream = matchfiles(SILLY.root,cfg.src,cfg.exclude)
   stream.on('file',function(abs,filename,extname){
     queue.push(commontask.unlink(abs))
