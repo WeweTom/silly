@@ -34,4 +34,4 @@ silly run tasks.json
 完成上面任务清单的任务
 
 ## 联系我
-   cookieu<AT>gmail.com
+   cookieu\[AT\]gmail.com
