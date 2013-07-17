@@ -1,4 +1,4 @@
 #!/usr/bin/env node
-var sb = require('../silly')
-sb()
+var exec = require('../silly').exec
+exec()
 

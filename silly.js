@@ -50,15 +50,16 @@ function help(){
   console.log('    silly compile filename.coffee')
   console.log('')
 }
-subcmd = pargv[2]
 
-if(commandWhiteList.indexOf(subcmd) == '-1'){
-  help();
-  process.exit();
-}
+function exec(){
+  subcmd = pargv[2]
 
-function exp(){
-  program.version(npmpkg.version);
+  if(commandWhiteList.indexOf(subcmd) == '-1'){
+    help();
+    return;
+  }
+
+  //program.version(npmpkg.version);
   switch(subcmd){
     case "init":
     program.usage(subcmd+' [options] [values ...]')
@@ -94,7 +95,9 @@ function exp(){
   }
 }
 
-module.exports = exp;
+var exp = module.exports = {}
+exp.exec = exec;
+
 // 添加目录模板
 var folderTypeWhiteList = ['kissypie']
 
