@@ -44,6 +44,7 @@ function help(){
 
   console.log('  Example: ')
   console.log('')
+  console.log('    silly run tasks.json')
   console.log('    silly init pagename')
   console.log('    silly compile filename.less')
   console.log('    silly compile filename.coffee')
@@ -54,6 +55,8 @@ if(commandWhiteList.indexOf(subcmd) == '-1'){
   help();
   process.exit();
 }
+
+// exports
 function exp(){
   program.version(npmpkg.version);
   switch(subcmd){
@@ -67,9 +70,9 @@ function exp(){
     // program.usage(subcmd+' [options] [values ...]')
     // program.option('-c, --config_json <string>','input a json config')
     case "compile":
-    program.usage(subcmd+' filename.less [filename.less]')
+    program.usage(subcmd+' filename.less [filename.css]')
     case "watch":
-    program.usage(subcmd+' filename.less [filename.less]')
+    program.usage(subcmd+' filename.less [filename.css]')
     break;
     //run(cwd,cfgfile);break;
   }
@@ -128,7 +131,13 @@ function init(){
   }
 }
 
+/**
+ * @return promise
+ * */
 function run(cwd,cfgfile){
+  var defer = Q.defer()
+    , promise = defer.promise
+
   var pkgroot
     , pkgname
     , jsonconfig
@@ -145,9 +154,11 @@ function run(cwd,cfgfile){
     root = Path.dirname(cfgfile)
   }
   SILLY.root = root
+
   function err(){
     pkgroot = cwd
     pkgname = tool.getPkgnameFromDir(pkgroot)
+    defer.reject()
   }
   function fin(){
     SILLY.pkgroot = pkgroot
@@ -198,19 +209,23 @@ function run(cwd,cfgfile){
       configparser.on('end',function(){
         if(hasnottask){
           console.log('>>>未定义任何有效的任务')
+          defer.reject("未定义任何有效的任务");
           return
         }
         if(errorstack.length){
           console.log(errorstack.join('\n'))
+          defer.reject(errorstack.join('\n'));
           return
         }
         pipe(SILLY,taskqueue)
         .then(function(){
           console.log('[success]')
+          defer.resolve();
         })
         .fail(function(err){
           console.log('[failed]')
           console.log(err)
+          defer.reject(err);
         })
         .fin(function(){
           console.log('[end]')
@@ -251,27 +266,29 @@ function run(cwd,cfgfile){
               task = require(Tasks.coffee);
             }else{
               console.log('>>>')
-              console.log('       只能执行silly run script_name.js')
-              console.log('          或者：');
-              console.log('       只能执行silly run less_file.less')
+              console.log('       只能 silly run script_name.js')
+              console.log('       或者 silly run less_file.less');
               return;
             }
-            taskqueue.push(TaskGenerator(task,taskconfig))
+            taskqueue.push(TaskGenerator(task,taskconfig));
           })
         }
         pipe(SILLY,taskqueue)
         .then(function(){
           console.log('>>>done')
+          defer.resolve();
         })
         .fail(function(err){
           console.log('>>>fail:',err)
+          defer.reject();
         })
       }else{
         console.warn('>>> does not find find any file')
         console.log('>>> usage:')
         console.log('          只能执行silly run script_name.js')
         console.log('            或者：');
-        console.log('          只能执行silly run less_file.less')
+        console.log('          只能执行silly run less_file.less');
+        defer.reject();
       }
     }
   }
@@ -287,7 +304,8 @@ function run(cwd,cfgfile){
         jsonconfig = eval('('+buffer.toString()+')');
       }catch(e){
         console.log(e);
-        process.exit();
+        defer.reject();
+        return;
       }
 
       SILLY.config = jsonconfig
@@ -307,7 +325,23 @@ function run(cwd,cfgfile){
     err();
     fin();
   }
+  return promise;
 }
+
+// 对外export可编程的接口
+var commands = exp.commands = {};
+/**
+ * 从文件执行一个任务清单
+ * @param tasks_json_file 任务清单路径
+ * @param root 查找根路径 optional
+ * */
+commands.run = function(tasks_json_file,root){
+  root || (root = cwd);
+  return run(root,tasks_json_file);
+}
+
+//从json对象执行一个任务清单
+commands.exec = function(){}
 
 // 导出可能用到的库以及工具集
 exp.Q = Q
