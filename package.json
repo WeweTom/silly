@@ -1,7 +1,7 @@
 {
   "author": "cookieu@gmail.com",
   "name": "silly-builder",
-  "version": "0.0.7",
+  "version": "0.0.8",
 	"preferGlobal":true,
   "bin":{"silly":"./bin/cli"},
   "main":"silly.js",
